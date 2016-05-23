@@ -1,0 +1,58 @@
+{
+  "v": "4.0",
+  "name": "java-weblogic-gradle-factory",
+  "workspace": {
+    "defaultEnv": "default",
+    "environments": [
+      {
+        "name": "default",
+        "machineConfigs": [
+          {
+            "limits": {
+              "ram": 3000
+            },
+            "name": "ws-machine",
+            "type": "docker",
+            "source": {
+              "location": "https://gist.githubusercontent.com/stour/3f4d7c46bff9f36f5a09c2fed1a69f30/raw/8c0e28cb18649edd8db127eb4e4e1bbc58d4f5cb/Dockerfile",
+              "type": "recipe"
+            },
+            "dev": true,
+            "servers": [],
+            "envVariables": {},
+            "links": []
+          }
+        ]
+      }
+    ],
+    "projects": [],
+    "name": "default",
+    "commands": [
+      {
+        "commandLine":"([ -d /home/user/user_projects/domains/base_domain ] && cd /home/user/user_projects/domains/base_domain/bin && ./startWebLogic.sh) || (echo \"Domain base_domain does not exist.\")",
+        "name":"Weblogic :: start",
+        "attributes":{
+          "previewUrl":"http://${server.port.7001}"
+        },
+        "type":"custom"
+      },
+      {
+        "commandLine":"([ -d /home/user/user_projects/domains/base_domain ] && cd /home/user/user_projects/domains/base_domain/bin && ./stopWebLogic.sh) || (echo \"Domain base_domain does not exist.\")",
+        "name":"Weblogic :: stop",
+        "attributes":{
+          "previewUrl":""
+        },
+        "type":"custom"
+      },
+      {
+        "commandLine":"cd $ORACLE_HOME/oracle_common/common/bin && ./wlst.sh -skipWLSModuleScanning /home/user/create-wls-domain.py && mkdir -p /home/user/user_projects/domains/base_domain/servers/AdminServer/security && echo \"username=weblogic\" > /home/user/user_projects/domains/base_domain/servers/AdminServer/security/boot.properties && echo \"password=$ADMIN_PASSWORD\" >> /home/user/user_projects/domains/base_domain/servers/AdminServer/security/boot.properties",
+        "name":"Weblogic :: create domain",
+        "attributes":{
+          "previewUrl":""
+        },
+        "type":"custom"
+      }
+    ],
+    "links": []
+  }
+}
