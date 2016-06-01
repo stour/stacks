@@ -1,0 +1,75 @@
+{
+  "name": "web-java-gradle",
+  "displayName": "web-java-gradle",
+  "path": "/web-java-gradle",
+  "description": "A basic example using Gradle and deploying on Weblogic.",
+  "projectType": "maven",
+  "mixins": [],
+  "attributes": {
+    "language": [
+      "java"
+    ]
+  },
+  "modules": [],    "problems": [],
+  "source": {
+    "type": "git",
+    "location": "https://github.com/stour/web-app-quickstart.git",
+    "parameters": {}
+  },
+  "commands": [
+    {
+      "commandLine":"cd $MW_HOME/wlserver/common/bin && ./config.sh mode=console",
+      "name":"Weblogic :: create domain (interactive)",
+      "attributes":{
+        "previewUrl":""
+      },
+      "type":"custom"
+    },
+    {
+      "commandLine":"([ -d $MW_HOME/user_projects/domains/base_domain ] && cd $MW_HOME/user_projects/domains/base_domain/bin && ./startWebLogic.sh) || (echo \\\"Domain base_domain does not exist.\\\")",
+      "name":"Weblogic :: start",
+      "attributes":{
+        "previewUrl":"http://${server.port.7001}"
+      },
+      "type":"custom"
+    },
+    {
+      "commandLine":"([ -d $MW_HOME/user_projects/domains/base_domain ] && cd $MW_HOME/user_projects/domains/base_domain/bin && ./stopWebLogic.sh) || (echo \\\"Domain base_domain does not exist.\\\")",
+      "name":"Weblogic :: stop",
+      "attributes":{
+        "previewUrl":""
+      },
+      "type":"custom"
+    },
+    {
+      "commandLine":"cd $MW_HOME/wlserver/server/lib && java -jar wljarbuilder.jar",
+      "name":"Project :: generate Weblogic client (needed to build)",
+      "attributes":{
+        "previewUrl":""
+      },
+      "type":"custom"
+    },
+    {
+      "commandLine":"cd ${current.project.path} && gradle build",
+      "name":"Project :: build",
+      "attributes":{
+        "previewUrl":""
+      },
+      "type":"custom"
+    },
+    {
+      "commandLine":"cd ${current.project.path} && gradle wlDeploy",
+      "name":"Project :: deploy",
+      "attributes":{
+        "previewUrl":""
+      },
+      "type":"custom"
+    }
+  ],
+  "links": [],
+  "category": "Samples",
+  "tags": [
+    "gradle",
+    "java"
+  ]
+}
