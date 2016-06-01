@@ -1,0 +1,104 @@
+{
+  "id": "java-weblogic-gradle",
+  "creator": "ide",
+  "name": "TIAA-CREF Java",
+  "description": "Java Stack with JDK 8, Gradle and Weblogic.",
+  "scope": "general",
+  "tags": [
+    "Java",
+    "JDK",
+    "Maven",
+    "Gradle",
+    "Weblogic",
+    "Git"
+  ],
+  "components": [
+    {
+      "name": "JDK",
+      "version": "1.8.0_65"
+    },
+    {
+      "name": "Maven",
+      "version": "3.3.9"
+    },
+    {
+      "name": "Gradle",
+      "version": "2.13"
+    },
+    {
+      "name": "Weblogic",
+      "version": "10.3.6"
+    }
+  ],
+  "source": {
+    "type": "image",
+    "origin": "stour/java-weblogic-gradle-stack"
+  },
+  "workspaceConfig": {
+    "environments": [
+      {
+        "name": "default",
+        "recipe": null,
+        "machineConfigs": [
+          {
+            "name": "default",
+            "limits": {
+              "ram": 2000
+            },
+            "source": {
+              "location": "stub",
+              "type": "dockerfile"
+            },
+            "type": "docker",
+            "dev": true
+          }
+        ]
+      }
+    ],
+    "name": "default",
+    "defaultEnv": "default",
+    "description": null,
+    "commands": [
+      {
+        "commandLine":"cd $MW_HOME/wlserver/common/bin && ./config.sh mode=console",
+        "name":"Weblogic :: create domain (interactive)",
+        "attributes":{
+          "previewUrl":""
+        },
+        "type":"custom"
+      },
+      {
+        "commandLine":"([ -d $MW_HOME/user_projects/domains/base_domain ] && cd $MW_HOME/user_projects/domains/base_domain/bin && ./startWebLogic.sh) || (echo \\\"Domain base_domain does not exist.\\\")",
+        "name":"Weblogic :: start",
+        "attributes":{
+          "previewUrl":"http://${server.port.7001}"
+        },
+        "type":"custom"
+      },
+      {
+        "commandLine":"([ -d $MW_HOME/user_projects/domains/base_domain ] && cd $MW_HOME/user_projects/domains/base_domain/bin && ./stopWebLogic.sh) || (echo \\\"Domain base_domain does not exist.\\\")",
+        "name":"Weblogic :: stop",
+        "attributes":{
+          "previewUrl":""
+        },
+        "type":"custom"
+      }
+    ]
+  },
+  "permissions": {
+    "groups": [
+      {
+        "acl": [
+          "read",
+          "search"
+        ],
+        "name": "public"
+      }
+    ],
+    "users": {}
+  },
+  "stackIcon": {
+    "name": "type-java.svg",
+    "mediaType": "image/svg+xml"
+  }
+}
