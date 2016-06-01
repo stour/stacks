@@ -15,7 +15,7 @@
             "type": "docker",
             "source": {
               "location": "https://gist.githubusercontent.com/stour/3f4d7c46bff9f36f5a09c2fed1a69f30/raw/8c0e28cb18649edd8db127eb4e4e1bbc58d4f5cb/Dockerfile",
-              "type": "recipe"
+              "type": "dockerfile"
             },
             "dev": true,
             "servers": [],
