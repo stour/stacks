@@ -2,7 +2,7 @@ FROM centos:latest
 
 # Environment variables required for Java and Weblogic
 # ----------------------------------------------------
-ENV JAVA_HOME /opt/jre1.8.0_65
+ENV JAVA_HOME /opt/jdk1.8.0_65
 ENV CONFIG_JVM_ARGS -Djava.security.egd=file:/dev/./urandom
 
 ENV WLS_PKG wls1036_generic.jar
@@ -20,8 +20,8 @@ ENV GRADLE_HOME=/home/user/gradle-$GRADLE_VERSION
 
 ENV PATH=$GRADLE_HOME/bin:$JAVA_HOME/bin:$M2_HOME/bin:$PATH
 
-ENV JRE_VERSION_WS_AGENT=8u65-b17
-ENV JRE_ARCHIVE_WS_AGENT=jre-8u65-linux-x64.tar.gz
+ENV JDK_VERSION_WS_AGENT=8u65-b17
+ENV JDK_ARCHIVE_WS_AGENT=jdk-8u65-linux-x64.tar.gz
 
 ENV TERM xterm
 ENV LANG C.UTF-8
@@ -45,7 +45,7 @@ RUN yum -y update && \
     --no-check-certificate \
     --header "Cookie: oraclelicense=accept-securebackup-cookie" \
     -qO - \
-   "http://download.oracle.com/otn-pub/java/jdk/$JRE_VERSION_WS_AGENT/$JRE_ARCHIVE_WS_AGENT" | tar -zx -C /opt/ && \
+   "http://download.oracle.com/otn-pub/java/jdk/$JDK_VERSION_WS_AGENT/$JDK_ARCHIVE_WS_AGENT" | tar -zx -C /opt/ && \
     echo -e "#! /bin/bash\nset -e\n" > /home/user/entrypoint.sh && \
     echo -e "sudo ssh-keygen -A" >> /home/user/entrypoint.sh && \
     echo -e "sudo /usr/sbin/sshd -D &\nexec \"\$@\"\n" >> /home/user/entrypoint.sh && \
