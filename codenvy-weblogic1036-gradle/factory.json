@@ -34,7 +34,7 @@
             "java"
           ]
         },
-        "type": "maven",
+        "type": "blank",
         "source": {
           "location": "https://github.com/stour/web-app-quickstart.git",
           "type": "git",
