@@ -26,6 +26,9 @@ ENV JDK_ARCHIVE_WS_AGENT=jdk-8u65-linux-x64.tar.gz
 ENV TERM xterm
 ENV LANG C.UTF-8
 
+# Workaround for Codenvy terminal
+ENV no_proxy="densbb3utcod20.cloud.tiaa-cref.org"
+
 # Needed for Codenvy workspace + Weblogic
 # ---------------------------------------
 EXPOSE 4403 8080 8000 22 7001
