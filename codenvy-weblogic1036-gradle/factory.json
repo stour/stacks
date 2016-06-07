@@ -74,6 +74,14 @@
         "type": "custom"
       },
       {
+        "commandLine": "echo \"systemProp.https.proxyHost=proxy.ops.tiaa-cref.org\" >> ~/.gradle/gradle.properties && echo \"systemProp.https.proxyPort=8080\" >> ~/.gradle/gradle.properties",
+        "name": "Project :: configure",
+        "attributes": {
+          "previewUrl": ""
+        },
+        "type": "custom"
+      },
+      {
         "commandLine": "cd ${current.project.path} && gradle build",
         "name": "Project :: build",
         "attributes": {
