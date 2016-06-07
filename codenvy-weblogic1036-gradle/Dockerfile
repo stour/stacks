@@ -101,6 +101,11 @@ RUN sudo chmod +x /home/user/create-wls-domain.py && \
    echo "/home/user/weblogic/user_projects/domains/base_domain/bin/setDomainEnv.sh" >> ~/.bashrc && \
    echo "export PATH=$PATH:/home/user/weblogic/user_projects/domains/base_domain/bin" >> ~/.bashrc
 
+# Copy utility needed for Weblogic deployment
+# See https://github.com/Liverpool-Victoria/gradle-weblogic-plugin#usage
+COPY wlfullclient-1036.jar $MW_HOME
+RUN sudo chmod +x $MW_HOME/wlfullclient-1036.jar
+
 # Cache Maven dependencies of a given project (EXAMPLE with console-java-simple)
 # ------------------------------------------------------------------------------
 #RUN mkdir /tmp/console-java-simple && \
