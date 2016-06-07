@@ -81,11 +81,22 @@ RUN java -jar $WLS_PKG -mode=silent -silent_xml=$SILENT_XML && \
     rm $WLS_PKG $SILENT_XML
 RUN ln -s /home/user/weblogic/wlserver_10.3 /home/user/weblogic/wlserver
 
-ENV PATH $PATH:/home/user/weblogic/oracle_common/common/bin
+ENV PATH $PATH:/home/user/weblogic/wlserver/common/bin
 
 # Set Weblogic environment
 # -------------------------------------
 RUN cd $MW_HOME/wlserver/server/bin && ./setWLSEnv.sh
+
+# Create weblogic domain
+COPY create-wls-domain.py /home/user
+
+RUN sudo chmod +x /home/user/create-wls-domain.py && \
+   /home/user/weblogic/wlserver/common/bin/wlst.sh -skipWLSModuleScanning /home/user/create-wls-domain.py && \
+   mkdir -p /home/user/weblogic/user_projects/domains/base_domain/servers/AdminServer/security && \
+   echo "username=weblogic" > /home/user/weblogic/user_projects/domains/base_domain/servers/AdminServer/security/boot.properties && \
+   echo "password=codenvy2016" >> /home/user/weblogic/user_projects/domains/base_domain/servers/AdminServer/security/boot.properties && \
+   echo "/home/user/weblogic/user_projects/domains/base_domain/bin/setDomainEnv.sh" >> ~/.bashrc && \
+   echo "export PATH=$PATH:/home/user/weblogic/user_projects/domains/base_domain/bin" >> ~/.bashrc
 
 # Cache Maven dependencies of a given project (EXAMPLE with console-java-simple)
 # ------------------------------------------------------------------------------
