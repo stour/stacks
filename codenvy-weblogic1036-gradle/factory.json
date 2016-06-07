@@ -53,7 +53,7 @@
         "commandLine": "([ -d $MW_HOME/user_projects/domains/base_domain ] && cd $MW_HOME/user_projects/domains/base_domain/bin && ./startWebLogic.sh) || (echo \\\"Domain base_domain does not exist.\\\")",
         "name": "Weblogic :: start",
         "attributes": {
-          "previewUrl": "http://${server.port.7001}/web-app-quickstart"
+          "previewUrl": "http://${server.port.7001}/console"
         },
         "type": "custom"
       },
@@ -77,7 +77,7 @@
         "commandLine": "cd ${current.project.path} && gradle wlDeploy",
         "name": "Project :: deploy",
         "attributes": {
-          "previewUrl": ""
+          "previewUrl": "http://${server.port.7001}/web-app-quickstart"
         },
         "type": "custom"
       },
@@ -85,7 +85,7 @@
         "commandLine": "([ -f ~/.gradle ] && [ -f ~/.gradle/gradle.properties ] || (mkdir ~/.gradle && echo systemProp.https.proxyHost=proxy.ops.tiaa-cref.org >> ~/.gradle/gradle.properties && echo systemProp.https.proxyPort=8080 >> ~/.gradle/gradle.properties)) && cd ${current.project.path} && gradle build wlDeploy",
         "name": "Project :: build n deploy",
         "attributes": {
-          "previewUrl": ""
+          "previewUrl": "http://${server.port.7001}/web-app-quickstart"
         },
         "type": "custom"
       }

@@ -92,14 +92,14 @@ RUN cd $MW_HOME/wlserver/server/bin && ./setWLSEnv.sh
 
 # Create weblogic domain
 COPY create-wls-domain.py /home/user
-
 RUN sudo chmod +x /home/user/create-wls-domain.py && \
    /home/user/weblogic/wlserver/common/bin/wlst.sh -skipWLSModuleScanning /home/user/create-wls-domain.py && \
    mkdir -p /home/user/weblogic/user_projects/domains/base_domain/servers/AdminServer/security && \
    echo "username=weblogic" > /home/user/weblogic/user_projects/domains/base_domain/servers/AdminServer/security/boot.properties && \
    echo "password=codenvy2016" >> /home/user/weblogic/user_projects/domains/base_domain/servers/AdminServer/security/boot.properties && \
    echo "/home/user/weblogic/user_projects/domains/base_domain/bin/setDomainEnv.sh" >> ~/.bashrc && \
-   echo "export PATH=$PATH:/home/user/weblogic/user_projects/domains/base_domain/bin" >> ~/.bashrc
+   echo "export PATH=$PATH:/home/user/weblogic/user_projects/domains/base_domain/bin" >> ~/.bashrc && \
+   sudo sed -i 's/^securerandom.source=.*$/securerandom.source=file:\/dev\/.\/urandom/' $JAVA_HOME/jre/lib/security/java.security
 
 # Copy utility needed for Weblogic deployment
 # See https://github.com/Liverpool-Victoria/gradle-weblogic-plugin#usage
