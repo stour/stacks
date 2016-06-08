@@ -29,12 +29,8 @@
       {
         "links": [],
         "name": "web-app-quickstart",
-        "attributes": {
-          "language": [
-            "java"
-          ]
-        },
-        "type": "blank",
+        "attributes": {},
+        "type": "plainJava",
         "source": {
           "location": "https://github.com/stour/web-app-quickstart.git",
           "type": "git",
