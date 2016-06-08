@@ -106,6 +106,9 @@ RUN sudo chmod +x /home/user/create-wls-domain.py && \
 COPY wlfullclient-1036.jar $MW_HOME
 RUN sudo chmod +x $MW_HOME/wlfullclient-1036.jar
 
+# Exposing Weblogic debug port
+EXPOSE 8453
+
 # Cache Maven dependencies of a given project (EXAMPLE with console-java-simple)
 # ------------------------------------------------------------------------------
 #RUN mkdir /tmp/console-java-simple && \

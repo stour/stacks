@@ -46,8 +46,16 @@
     "name": "workspace",
     "commands": [
       {
-        "commandLine": "([ -d $MW_HOME/user_projects/domains/base_domain ] && cd $MW_HOME/user_projects/domains/base_domain/bin && ./startWebLogic.sh) || (echo \\\"Domain base_domain does not exist.\\\")",
+        "commandLine": "([ -d $MW_HOME/user_projects/domains/base_domain ] && export debugFlag=false && cd $MW_HOME/user_projects/domains/base_domain/bin && ./startWebLogic.sh) || (echo \\\"Domain base_domain does not exist.\\\")",
         "name": "Weblogic :: start",
+        "attributes": {
+          "previewUrl": "http://${server.port.7001}/console"
+        },
+        "type": "custom"
+      },
+      {
+        "commandLine": "([ -d $MW_HOME/user_projects/domains/base_domain ] && export debugFlag=true && cd $MW_HOME/user_projects/domains/base_domain/bin && ./startWebLogic.sh) || (echo \\\"Domain base_domain does not exist.\\\")",
+        "name": "Weblogic :: debug",
         "attributes": {
           "previewUrl": "http://${server.port.7001}/console"
         },
