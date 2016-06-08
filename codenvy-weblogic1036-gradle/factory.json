@@ -70,7 +70,7 @@
         "type": "custom"
       },
       {
-        "commandLine": "([ -f ~/.gradle ] && [ -f ~/.gradle/gradle.properties ] || (mkdir ~/.gradle && echo systemProp.https.proxyHost=proxy.ops.tiaa-cref.org >> ~/.gradle/gradle.properties && echo systemProp.https.proxyPort=8080 >> ~/.gradle/gradle.properties)) && cd ${current.project.path} && gradle build",
+        "commandLine": "([ -f ~/.gradle ] && [ -f ~/.gradle/gradle.properties ] || (mkdir -p ~/.gradle && echo systemProp.https.proxyHost=proxy.ops.tiaa-cref.org >> ~/.gradle/gradle.properties && echo systemProp.https.proxyPort=8080 >> ~/.gradle/gradle.properties)) && cd ${current.project.path} && gradle build",
         "name": "Project :: build",
         "attributes": {
           "previewUrl": ""
@@ -78,7 +78,7 @@
         "type": "custom"
       },
       {
-        "commandLine": "cd ${current.project.path} && gradle wlDeploy",
+        "commandLine": "([ -f ~/.gradle ] && [ -f ~/.gradle/gradle.properties ] || (mkdir -p ~/.gradle && echo systemProp.https.proxyHost=proxy.ops.tiaa-cref.org >> ~/.gradle/gradle.properties && echo systemProp.https.proxyPort=8080 >> ~/.gradle/gradle.properties)) && cd ${current.project.path} && gradle wlDeploy",
         "name": "Project :: deploy",
         "attributes": {
           "previewUrl": "http://${server.port.7001}/web-app-quickstart"
@@ -86,7 +86,7 @@
         "type": "custom"
       },
       {
-        "commandLine": "([ -f ~/.gradle ] && [ -f ~/.gradle/gradle.properties ] || (mkdir ~/.gradle && echo systemProp.https.proxyHost=proxy.ops.tiaa-cref.org >> ~/.gradle/gradle.properties && echo systemProp.https.proxyPort=8080 >> ~/.gradle/gradle.properties)) && cd ${current.project.path} && gradle build wlDeploy",
+        "commandLine": "([ -f ~/.gradle ] && [ -f ~/.gradle/gradle.properties ] || (mkdir -p ~/.gradle && echo systemProp.https.proxyHost=proxy.ops.tiaa-cref.org >> ~/.gradle/gradle.properties && echo systemProp.https.proxyPort=8080 >> ~/.gradle/gradle.properties)) && cd ${current.project.path} && gradle build wlDeploy",
         "name": "Project :: build n deploy",
         "attributes": {
           "previewUrl": "http://${server.port.7001}/web-app-quickstart"
