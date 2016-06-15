@@ -30,7 +30,7 @@
         "links": [],
         "name": "web-app-quickstart",
         "attributes": {},
-        "type": "plainJava",
+        "type": "javac",
         "source": {
           "location": "https://github.com/stour/web-app-quickstart.git",
           "type": "git",
