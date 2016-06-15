@@ -3,7 +3,6 @@ FROM centos:latest
 # Environment variables required for Java and Weblogic
 # ----------------------------------------------------
 ENV JAVA_HOME /opt/jdk1.8.0_65
-ENV CONFIG_JVM_ARGS -Djava.security.egd=file:/dev/./urandom
 
 ENV WLS_PKG wls1036_generic.jar
 ENV BEA_HOME /home/user/weblogic
@@ -27,11 +26,20 @@ ENV TERM xterm
 ENV LANG C.UTF-8
 
 # Workaround for Codenvy terminal
+# -------------------------------
 ENV no_proxy="densbb3utcod20.cloud.tiaa-cref.org"
 
-# Needed for Codenvy workspace + Weblogic
-# ---------------------------------------
-EXPOSE 4403 8080 8000 22 7001
+# Enable Weblogic debugging
+# -------------------------
+ENV debugFlag=true
+
+# Ports opening for Codenvy workspace
+# -----------------------------------
+EXPOSE 4403 8080 8000 22
+
+# Ports opening for Weblogic
+# --------------------------
+EXPOSE 7001 8453
 
 # Create user and install utilities for Codenvy workspace
 # -------------------------------------------------------
@@ -62,24 +70,24 @@ USER user
 LABEL che:server:8080:ref=tomcat8 che:server:8080:protocol=http che:server:8000:ref=tomcat8-debug che:server:8000:protocol=http
 
 # Install Maven
-# -------------------------------------
+# -------------
 RUN mkdir /home/user/apache-maven-$MAVEN_VERSION && \
     wget -qO - "http://mirror.olnevhost.net/pub/apache/maven/maven-3/$MAVEN_VERSION/binaries/apache-maven-$MAVEN_VERSION-bin.tar.gz" \
     | tar -zx --strip-components=1 -C /home/user/apache-maven-$MAVEN_VERSION
 
 # Install Gradle
-# -------------------------------------
+# --------------
 RUN wget -q "https://services.gradle.org/distributions/gradle-$GRADLE_VERSION-bin.zip" && \
     unzip -oq gradle-$GRADLE_VERSION-bin.zip && \
     rm gradle-$GRADLE_VERSION-bin.zip
 
-# Copy package
-# -------------------------------------
+# Copy Wevlogic package and configuration file
+# --------------------------------------------
 COPY $SILENT_XML /home/user/
 COPY $WLS_PKG /home/user/
 
 # Install Weblogic
-# -------------------------------------
+# ----------------
 RUN java -jar $WLS_PKG -mode=silent -silent_xml=$SILENT_XML && \
     rm $WLS_PKG $SILENT_XML
 RUN ln -s /home/user/weblogic/wlserver_10.3 /home/user/weblogic/wlserver
@@ -87,10 +95,11 @@ RUN ln -s /home/user/weblogic/wlserver_10.3 /home/user/weblogic/wlserver
 ENV PATH $PATH:/home/user/weblogic/wlserver/common/bin
 
 # Set Weblogic environment
-# -------------------------------------
+# ------------------------
 RUN cd $MW_HOME/wlserver/server/bin && ./setWLSEnv.sh
 
 # Create weblogic domain
+# ----------------------
 COPY create-wls-domain.py /home/user
 RUN sudo chmod +x /home/user/create-wls-domain.py && \
    /home/user/weblogic/wlserver/common/bin/wlst.sh -skipWLSModuleScanning /home/user/create-wls-domain.py && \
@@ -101,21 +110,10 @@ RUN sudo chmod +x /home/user/create-wls-domain.py && \
    echo "export PATH=$PATH:/home/user/weblogic/user_projects/domains/base_domain/bin" >> ~/.bashrc && \
    sudo sed -i 's/^securerandom.source=.*$/securerandom.source=file:\/dev\/.\/urandom/' $JAVA_HOME/jre/lib/security/java.security
 
-# Copy utility needed for Weblogic deployment
+# Copy utility needed for deployment of Gradle app to Weblogic
 # See https://github.com/Liverpool-Victoria/gradle-weblogic-plugin#usage
 COPY wlfullclient-1036.jar $MW_HOME
 RUN sudo chmod +x $MW_HOME/wlfullclient-1036.jar
-
-# Exposing Weblogic debug port
-EXPOSE 8453
-
-# Cache Maven dependencies of a given project (EXAMPLE with console-java-simple)
-# ------------------------------------------------------------------------------
-#RUN mkdir /tmp/console-java-simple && \
-#    cd /tmp && \
-#    git clone https://github.com/stour/console-java-simple.git && \
-#    cd /tmp/console-java-simple && \
-#    mvn dependency:sources
 
 # Define default command to start bash
 # -------------------------------------
