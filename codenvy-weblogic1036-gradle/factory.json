@@ -28,15 +28,15 @@
     "projects": [
       {
         "links": [],
-        "name": "web-app-quickstart",
+        "name": "web-java-spring",
         "attributes": {},
         "type": "javac",
         "source": {
-          "location": "https://github.com/stour/web-app-quickstart.git",
+          "location": "https://github.com/stour/web-java-spring.git",
           "type": "git",
           "parameters": {}
         },
-        "path": "/web-app-quickstart",
+        "path": "/web-java-spring",
         "problems": [],
         "mixins": [
           "git"
@@ -81,7 +81,7 @@
         "commandLine": "([ -f ~/.gradle ] && [ -f ~/.gradle/gradle.properties ] || (mkdir -p ~/.gradle && echo systemProp.https.proxyHost=proxy.ops.tiaa-cref.org >> ~/.gradle/gradle.properties && echo systemProp.https.proxyPort=8080 >> ~/.gradle/gradle.properties)) && cd ${current.project.path} && gradle wlDeploy",
         "name": "Project :: deploy",
         "attributes": {
-          "previewUrl": "http://${server.port.7001}/web-app-quickstart"
+          "previewUrl": "http://${server.port.7001}/web-java-spring"
         },
         "type": "custom"
       },
@@ -89,7 +89,7 @@
         "commandLine": "([ -f ~/.gradle ] && [ -f ~/.gradle/gradle.properties ] || (mkdir -p ~/.gradle && echo systemProp.https.proxyHost=proxy.ops.tiaa-cref.org >> ~/.gradle/gradle.properties && echo systemProp.https.proxyPort=8080 >> ~/.gradle/gradle.properties)) && cd ${current.project.path} && gradle build wlDeploy",
         "name": "Project :: build n deploy",
         "attributes": {
-          "previewUrl": "http://${server.port.7001}/web-app-quickstart"
+          "previewUrl": "http://${server.port.7001}/web-java-spring"
         },
         "type": "custom"
       }
